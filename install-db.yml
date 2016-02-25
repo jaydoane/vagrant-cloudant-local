@@ -1,0 +1,15 @@
+---
+- hosts: all
+  sudo: true
+  gather_facts: false
+  vars:
+    config_dir: /opt/cloudant/cast/etc
+  tasks:
+    - shell: DEBIAN_FRONTEND=noninteractive cast system install -db
+      args:
+        creates: /opt/cloudant/lib # better choice?
+    - copy: src=files/dbnode.yaml dest={{ config_dir }}/
+    - command: cast node config {{ config_dir }}/dbnode.yaml
+    - copy: src=files/cluster.sh dest={{ config_dir }}/ mode=0755
+    - command: sleep 10 # love me them races
+    - shell: '{{ config_dir }}/cluster.sh'

@@ -1,0 +1,15 @@
+---
+- hosts: all
+  sudo: true
+  gather_facts: false
+  vars:
+    config_dir: /opt/cloudant/cast/etc
+  tasks:
+    - shell: DEBIAN_FRONTEND=noninteractive cast system install -lb
+      args:
+        creates: /etc/haproxy # better way?
+    - copy: src=files/gen_lbnode_yaml.py dest={{ config_dir }}/
+    - shell: DB_PREFIX={{ db_prefix }} python gen_lbnode_yaml.py < /etc/hosts > lbnode.yaml
+      args:
+        chdir: '{{ config_dir }}'
+    - command: cast node config {{ config_dir }}/lbnode.yaml

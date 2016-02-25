@@ -1,0 +1,15 @@
+---
+# http://stackoverflow.com/questions/18900236/run-command-on-the-ansible-host
+# $ ansible-playbook -i local get_latest_installer.yml
+- name: download latest ubuntu installer to speed vagrant deployment
+  hosts: all
+  vars:
+    ubuntu_version: trusty
+    archive_re: cloudant-[0-9.-]+{{ ubuntu_version }}-x86_64.tar.gz
+    installers_url: s3://cloudant-local-installer/releases/latest
+  tasks:
+    - shell: s3cmd ls {{ installers_url }}/ | egrep -o {{ archive_re }}
+      register: installer_cmd
+    - set_fact: archive={{ installer_cmd.stdout }}
+    - debug: var=archive
+    - command: s3cmd get {{ installers_url }}/{{ archive }} --skip-existing

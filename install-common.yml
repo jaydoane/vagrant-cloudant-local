@@ -1,0 +1,24 @@
+---
+# automate cloudant-local (re)install
+
+- hosts: all
+  sudo: true
+  gather_facts: false
+  vars:
+    archive: "{{ lookup('pipe', 'ls -1 cloudant-*.tar.gz | tail -n1') }}"
+    install_dir: /root
+    repo_dir: "{{ install_dir }}/cloudant/repo"
+  tasks:
+    - copy: src={{ archive }} dest={{ install_dir }}/
+    - unarchive: src={{ install_dir }}/{{ archive }} dest={{ install_dir }}/ copy=no
+    - command: ./install.bin -i silent -f production.properties
+      args:
+        chdir: '{{ install_dir }}/cloudant-installer'
+        creates: /cloudant/repo
+    - apt: name=python-pip
+    - shell: dpkg -i {{ repo_dir }}/pool/main/c/cloudant-cast/cloudant-cast_*.deb
+    - command: cast system addrepo {{ repo_dir }}
+    - shell: netstat -rn | grep "^0.0.0.0 " | cut -d " " -f10
+      register: netstat_cmd
+    - set_fact: host_ipaddr={{ netstat_cmd.stdout }}
+    - lineinfile: dest=/etc/hosts line='{{ host_ipaddr }} ldap.local'
