@@ -17,8 +17,7 @@
         creates: '{{ install_dir }}/cloudant/repo'
     - apt: update_cache=yes
     - apt: name=python-pip
-    - shell: dpkg -i {{ repo_dir }}/pool/main/c/cloudant-cast/cloudant-cast_*.deb
-    - command: cast system addrepo {{ repo_dir }}
+    - apt: name=cloudant-cast state=latest force=yes # force necessary for re-install?
     - shell: netstat -rn | grep "^0.0.0.0 " | cut -d " " -f10
       register: netstat_cmd
     - set_fact: host_ipaddr={{ netstat_cmd.stdout }}
