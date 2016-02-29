@@ -8,6 +8,7 @@
     archive: "{{ lookup('pipe', 'ls -1 cloudant-*.tar.gz | tail -n1') }}"
     install_dir: /root
     repo_dir: "{{ install_dir }}/cloudant/repo"
+    vagrant_host_name: ldap.local
   tasks:
     - copy: src={{ archive }} dest={{ install_dir }}/
     - unarchive: src={{ install_dir }}/{{ archive }} dest={{ install_dir }}/ copy=no
@@ -21,4 +22,4 @@
     - shell: netstat -rn | grep "^0.0.0.0 " | cut -d " " -f10
       register: netstat_cmd
     - set_fact: host_ipaddr={{ netstat_cmd.stdout }}
-    - lineinfile: dest=/etc/hosts line='{{ host_ipaddr }} ldap.local'
+    - lineinfile: dest=/etc/hosts line='{{ host_ipaddr }} {{ vagrant_host_name }}'
