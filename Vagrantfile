@@ -8,7 +8,7 @@
 # https://thornelabs.net/2014/11/13/multi-machine-vagrantfile-with-shorter-cleaner-syntax-using-json-and-loops.html
 
 memory_size = 1024
-domain_suffix = ".local" # erl needs this for starting with -name
+domain_suffix = ".local" # fqdn necessary for `erl -name` to work
 
 Vagrant.configure(2) do |config|
 
