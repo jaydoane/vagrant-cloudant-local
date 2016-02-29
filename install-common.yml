@@ -6,7 +6,6 @@
   gather_facts: false
   vars:
     archive: "{{ lookup('pipe', 'ls -1 cloudant-*.tar.gz | tail -n1') }}"
-    install_dir: /root
     repo_dir: "{{ install_dir }}/cloudant/repo"
     vagrant_host_name: ldap.local
   tasks:
@@ -15,7 +14,7 @@
     - command: ./install.bin -i silent -f production.properties
       args:
         chdir: '{{ install_dir }}/cloudant-installer'
-        creates: /cloudant/repo
+        creates: '{{ install_dir }}/cloudant/repo'
     - apt: name=python-pip
     - shell: dpkg -i {{ repo_dir }}/pool/main/c/cloudant-cast/cloudant-cast_*.deb
     - command: cast system addrepo {{ repo_dir }}
