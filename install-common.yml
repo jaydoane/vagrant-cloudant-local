@@ -1,5 +1,5 @@
 ---
-# automate cloudant-local (re)install
+# installation tasks common to all node types
 
 - hosts: all
   sudo: true
