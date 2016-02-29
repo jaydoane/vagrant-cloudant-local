@@ -22,3 +22,4 @@
       register: netstat_cmd
     - set_fact: host_ipaddr={{ netstat_cmd.stdout }}
     - lineinfile: dest=/etc/hosts line='{{ host_ipaddr }} {{ vagrant_host_name }}'
+    - lineinfile: dest=/home/vagrant/.bashrc line="alias r='sudo su - root'"
