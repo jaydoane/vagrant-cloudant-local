@@ -5,7 +5,7 @@
   vars:
     config_dir: /opt/cloudant/cast/etc
   tasks:
-    - shell: DEBIAN_FRONTEND=noninteractive cast system install -db
+    - command: cast system install -db
       args:
         creates: /opt/cloudant/lib # better choice?
     - copy: src=files/dbnode.yaml dest={{ config_dir }}/
