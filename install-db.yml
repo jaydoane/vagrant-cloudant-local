@@ -20,3 +20,4 @@
     - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
     - name: add missing newline at EOF
       shell: 'echo >> {{ bin_dir }}/erl_call_cloudant'
+    - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"log\", \"level\", \"notice\"]"'
