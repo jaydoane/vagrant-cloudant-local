@@ -15,6 +15,7 @@
       args:
         chdir: '{{ install_dir }}/cloudant-installer'
         creates: '{{ install_dir }}/cloudant/repo'
+    - apt: update_cache=yes
     - apt: name=python-pip
     - shell: dpkg -i {{ repo_dir }}/pool/main/c/cloudant-cast/cloudant-cast_*.deb
     - command: cast system addrepo {{ repo_dir }}
