@@ -11,5 +11,5 @@
     - copy: src=files/dbnode.yaml dest={{ config_dir }}/
     - command: cast node config {{ config_dir }}/dbnode.yaml
     - copy: src=files/cluster.sh dest={{ config_dir }}/ mode=0755
-    - command: sleep 10 # love me them races
+    - command: sleep 5 # love me them races
     - shell: '{{ config_dir }}/cluster.sh'
