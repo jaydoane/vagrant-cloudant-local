@@ -36,12 +36,10 @@ Vagrant.configure(2) do |config|
       config.vm.define name.to_sym do |node|
         node.vm.box = box
         node.vm.hostname = name + domain_suffix
+        # _NOTE_ disconnect Cisco AnyConnect VPN for private host-only routes, see:
+        # https://www.reddit.com/r/virtualbox/comments/2rqhae
+        # https://forums.virtualbox.org/viewtopic.php?f=8&t=55066
         node.vm.network :private_network, ip: env[:ip_addr_prefix] + num.to_s
-        if name == "lb1" # ugly, and needs improvement...
-          node.vm.network "forwarded_port", guest: 80, host: 8080
-          # node.vm.network :public_network, bridge: "en0: Wi-Fi (AirPort)"
-          # node.vm.network :public_network, ip: "10.0.1.6"
-        end
         node.vm.provider "virtualbox" do |v|
           v.name = name
           v.customize ["modifyvm", :id, "--memory", memory_size]
