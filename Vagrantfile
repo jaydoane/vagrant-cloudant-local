@@ -10,6 +10,7 @@
 re_install = false
 memory_size = 1024
 domain_suffix = ".local" # fqdn necessary for `erl -name` to work
+box = "ubuntu/trusty64"
 
 Vagrant.configure(2) do |config|
 
@@ -33,7 +34,7 @@ Vagrant.configure(2) do |config|
     1.upto(env[:count]) do |num|
       name = env[:name_prefix] + num.to_s
       config.vm.define name.to_sym do |node|
-        node.vm.box = "ubuntu/trusty64"
+        node.vm.box = box
         node.vm.hostname = name + domain_suffix
         node.vm.network :private_network, ip: env[:ip_addr_prefix] + num.to_s
         if name == "lb1" # ugly, and needs improvement...
