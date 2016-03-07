@@ -17,6 +17,7 @@ Vagrant.configure(2) do |config|
   # https://github.com/smdahlen/vagrant-hostmanager
   config.hostmanager.enabled = true
   config.hostmanager.manage_guest = true
+  config.hostmanager.manage_host = true
 
   # db nodes must be first so they show up in lb nodes' /etc/hosts
   envs = [
