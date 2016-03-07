@@ -9,8 +9,8 @@
 
 re_install = false
 memory_size = 1024
-domain_suffix = ".local" # fqdn necessary for `erl -name` to work
 box = "ubuntu/trusty64"
+domain_suffix = ".v" # fqdn necessary for `erl -name` to work
 
 Vagrant.configure(2) do |config|
 
