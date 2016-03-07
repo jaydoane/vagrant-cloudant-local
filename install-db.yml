@@ -22,3 +22,4 @@
       shell: 'echo >> {{ bin_dir }}/erl_call_cloudant'
     - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"log\", \"level\", \"notice\"]"'
     - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"hastings\", \"default_format\", \"legacy_local\"]"'
+    - copy: src=files/easton_index dest=/opt/cloudant/lib/easton-0.1.13-3-g60e5bb8/priv/
