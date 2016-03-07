@@ -5,7 +5,7 @@
   vars:
     config_dir: /opt/cloudant/cast/etc
   tasks:
-    - shell: DEBIAN_FRONTEND=noninteractive cast system install -lb
+    - shell: cast system install -lb
       args:
         creates: /etc/haproxy # better way?
     - copy: src=files/gen_lbnode_yaml.py dest={{ config_dir }}/
