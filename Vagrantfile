@@ -7,9 +7,15 @@
 # http://nitschinger.at/A-Couchbase-Cluster-in-Minutes-with-Vagrant-and-Puppet/
 # https://thornelabs.net/2014/11/13/multi-machine-vagrantfile-with-shorter-cleaner-syntax-using-json-and-loops.html
 
+# http://stackoverflow.com/questions/16708917/how-do-i-include-variables-in-my-vagrantfile?rq=1
+# http://stackoverflow.com/questions/25094819/how-should-we-externalize-variables-in-a-vagrantfile
+require 'yaml'
+current_dir = File.dirname(File.expand_path(__FILE__))
+conf = YAML.load_file("#{current_dir}/group_vars/all.yml")
+
 re_install = false
 memory_size = 1024
-box = "ubuntu/trusty64"
+box = "ubuntu/#{conf['platform']}64"
 domain_suffix = ".v" # fqdn necessary for `erl -name` to work
 
 Vagrant.configure(2) do |config|
@@ -22,11 +28,11 @@ Vagrant.configure(2) do |config|
   # db nodes must be first so they show up in lb nodes' /etc/hosts
   envs = [
     {:count => 3,
-     :name_prefix => "db",
+     :name_prefix => conf["db_prefix"],
      :ip_addr_prefix => "192.168.56.1",
      :install_file => "install-db.yml"},
     {:count => 1,
-     :name_prefix => "lb",
+     :name_prefix => conf["lb_prefix"],
      :ip_addr_prefix => "192.168.56.2",
      :install_file => "install-lb.yml"}
   ]
