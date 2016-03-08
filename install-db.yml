@@ -10,7 +10,7 @@
     - command: cast system install -db
       args:
         creates: /opt/cloudant/lib # better choice?
-    - copy: src=files/dbnode.yaml dest={{ config_dir }}/
+    - template: src=files/dbnode.yaml dest={{ config_dir }}/
     - command: cast node config {{ config_dir }}/dbnode.yaml
     - copy: src=files/cluster.sh dest={{ config_dir }}/ mode=0755
     - command: sleep 5 # love me them races

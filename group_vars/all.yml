@@ -3,3 +3,4 @@ platform: trusty
 db_prefix: db
 lb_prefix: lb
 install_dir: /root
+admin_password: pass
