@@ -3,7 +3,7 @@ dbnode:
         admin: {{ admin_password }}
         cloudant: {{ admin_password }}
 
-    cookie: monster
+    cookie: cthulhu
     uuid: 27d7f28b7ca51486ee824e6b6ba2453d
 
     quorum:
