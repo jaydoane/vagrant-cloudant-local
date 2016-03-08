@@ -14,6 +14,9 @@ current_dir = File.dirname(File.expand_path(__FILE__))
 conf = YAML.load_file("#{current_dir}/group_vars/all.yml")
 
 re_install = false
+
+db_count = 1
+lb_count = 1
 memory_size = 1024
 box = "ubuntu/#{conf['platform']}64"
 domain_suffix = ".v" # fqdn necessary for `erl -name` to work
@@ -27,11 +30,11 @@ Vagrant.configure(2) do |config|
 
   # db nodes must be first so they show up in lb nodes' /etc/hosts
   envs = [
-    {:count => 3,
+    {:count => db_count,
      :name_prefix => conf["db_prefix"],
      :ip_addr_prefix => "192.168.56.1",
      :install_file => "install-db.yml"},
-    {:count => 1,
+    {:count => lb_count,
      :name_prefix => conf["lb_prefix"],
      :ip_addr_prefix => "192.168.56.2",
      :install_file => "install-lb.yml"}
@@ -61,6 +64,11 @@ Vagrant.configure(2) do |config|
         end
         node.vm.provision "ansible" do |ansible|
           ansible.playbook = env[:install_file]
+        end
+        if env[:name_prefix] == conf["db_prefix"] && num == db_count
+          node.vm.provision "ansible" do |ansible|
+            ansible.playbook = "post-install-db.yml"
+          end
         end
       end
     end
