@@ -15,7 +15,7 @@ conf = YAML.load_file("#{current_dir}/group_vars/all.yml")
 
 re_install = false
 
-db_count = 1
+db_count = 3
 lb_count = 1
 memory_size = 1024
 box = "ubuntu/#{conf['platform']}64"
