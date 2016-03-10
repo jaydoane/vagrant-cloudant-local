@@ -3,4 +3,6 @@ platform: trusty
 db_prefix: db
 lb_prefix: lb
 install_dir: /root
+bin_dir: /opt/cloudant/bin
+config_dir: /opt/cloudant/cast/etc
 admin_password: pass

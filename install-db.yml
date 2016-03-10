@@ -3,8 +3,6 @@
   sudo: true
   gather_facts: false
   vars:
-    config_dir: /opt/cloudant/cast/etc
-    bin_dir: /opt/cloudant/bin
     append_bin_path: 'PATH=$PATH:{{ bin_dir }}'
   tasks:
     - command: cast system install -db
