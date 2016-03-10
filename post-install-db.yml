@@ -4,3 +4,10 @@
   gather_facts: false
   tasks:
     - command: cast database init --password {{ admin_password }}
+
+    # ensure all nodes have same exact encoded admin password
+    - command: '{{ bin_dir }}/erl_call_cloudant -a "config get [\"admins\", \"admin\"]"'
+      register: encoded_admin_pass_cmd
+    - set_fact: encoded_admin_pass={{ encoded_admin_pass_cmd.stdout }}
+    - debug: var=encoded_admin_pass
+    - command: '{{ bin_dir }}/erl_call_cloudant -a "rpc multicall [config, set, [\"admins\", \"admin\", \"{{ encoded_admin_pass }}\"]]"'
