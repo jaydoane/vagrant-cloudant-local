@@ -11,3 +11,7 @@
     - set_fact: encoded_admin_pass={{ encoded_admin_pass_cmd.stdout }}
     - debug: var=encoded_admin_pass
     - command: '{{ bin_dir }}/erl_call_cloudant -a "rpc multicall [config, set, [\"admins\", \"admin\", \"{{ encoded_admin_pass }}\"]]"'
+
+    # create non-admin secondary user for testy
+    - template: src=files/create_testy_user2.sh dest={{ config_dir }}/ mode=0755
+    - command: '{{ config_dir }}/create_testy_user2.sh'
