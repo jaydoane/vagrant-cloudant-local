@@ -11,7 +11,8 @@
     - template: src=files/dbnode.yaml dest={{ config_dir }}/
     - command: cast node config {{ config_dir }}/dbnode.yaml
     - copy: src=files/cluster.sh dest={{ config_dir }}/ mode=0755
-    - command: sleep 5 # love me them races
+    - copy: src=files/block_until_db_up.sh dest={{ config_dir }}/ mode=0755
+    - shell: '{{ config_dir }}/block_until_db_up.sh'
     - shell: '{{ config_dir }}/cluster.sh'
     - lineinfile: dest=/root/.bashrc line={{ append_bin_path }}
     - lineinfile: dest=/root/.bashrc line="alias tl='tail -f /var/log/cloudant/cloudant-svlogd/current'"
