@@ -2,6 +2,7 @@
 # http://stackoverflow.com/questions/18900236/run-command-on-the-ansible-host
 # $ ansible-playbook -i local get_latest_installer.yml
 - name: download/cache latest ubuntu installer to speed vagrant multi-node deployment
+  gather_facts: false
   hosts: all
   vars:
     archive_re: cloudant-[0-9.-]+{{ platform }}-x86_64.tar.gz
