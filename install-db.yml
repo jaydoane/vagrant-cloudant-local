@@ -17,8 +17,6 @@
     - lineinfile: dest=/root/.bashrc line={{ append_bin_path }}
     - lineinfile: dest=/root/.bashrc line="alias tl='tail -f /var/log/cloudant/cloudant-svlogd/current'"
     - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
-    - name: add missing newline at EOF
-      shell: 'echo >> {{ bin_dir }}/erl_call_cloudant'
     - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"log\", \"level\", \"notice\"]"'
     - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"hastings\", \"default_format\", \"legacy_local\"]"'
     - copy: src=files/easton_index dest=/opt/cloudant/lib/easton-0.1.13-3-g60e5bb8/priv/
