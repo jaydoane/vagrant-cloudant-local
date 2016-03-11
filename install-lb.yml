@@ -2,8 +2,6 @@
 - hosts: all
   sudo: true
   gather_facts: false
-  vars:
-    config_dir: /opt/cloudant/cast/etc
   tasks:
     - shell: cast system install -lb
       args:
