@@ -18,4 +18,3 @@
     - lineinfile: dest=/root/.bashrc line="alias tl='tail -f /var/log/cloudant/cloudant-svlogd/current'"
     - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
     - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"log\", \"level\", \"notice\"]"'
-    - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"hastings\", \"default_format\", \"legacy_local\"]"'
