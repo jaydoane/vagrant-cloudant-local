@@ -5,9 +5,11 @@
   sudo: true
   gather_facts: false
   vars:
-    archive: "{{ lookup('pipe', 'ls -1 cloudant-*.tar.gz | tail -n1') }}"
-    repo_dir: "{{ install_dir }}/cloudant/repo"
+    archive_cmd: 'ls -1 cloudant-*-{{platform}}-*.tar.gz | tail -n1'
+    archive: '{{ lookup("pipe", archive_cmd) }}'
+    repo_dir: '{{ install_dir }}/cloudant/repo'
   tasks:
+    - debug: var=archive
     - copy: src={{ archive }} dest={{ install_dir }}/
     - unarchive: src={{ install_dir }}/{{ archive }} dest={{ install_dir }}/ copy=no
     - command: ./install.bin -i silent -f production.properties
