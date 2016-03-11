@@ -4,5 +4,5 @@ db_prefix: db
 lb_prefix: lb
 install_dir: /root
 bin_dir: /opt/cloudant/bin
-config_dir: /opt/cloudant/cast/etc
+config_dir: /opt/cloudant/.config
 admin_password: pass

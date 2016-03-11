@@ -17,6 +17,7 @@
         chdir: '{{ install_dir }}/cloudant-installer'
         creates: '{{ install_dir }}/cloudant/repo'
     - lineinfile: dest=/home/vagrant/.bashrc line="alias r='sudo su - root'"
+    - file: path={{ config_dir }} state=directory owner=cloudant group=cloudant
 
     # FIXME: these should be installed automatically by previous step BugzID: 62253
     - apt: name=python-pip
