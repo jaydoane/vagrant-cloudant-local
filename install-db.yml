@@ -6,9 +6,7 @@
     append_bin_path: 'PATH=$PATH:{{ bin_dir }}'
     erl_call: '{{ bin_dir }}/erl_call_cloudant'
   tasks:
-    - command: cast system install -db
-      args:
-        creates: /opt/cloudant/lib # better choice?
+    - command: cast system install -db creates=/opt/cloudant/lib
     - template: src=files/dbnode.yaml dest={{ config_dir }}/
     - command: cast node config {{ config_dir }}/dbnode.yaml
     - copy: src=files/block_until_db_up.sh dest={{ config_dir }}/ mode=0755
