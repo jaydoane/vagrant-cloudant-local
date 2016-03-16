@@ -13,7 +13,7 @@
     - copy: src={{ archive }} dest={{ install_dir }}/
     - unarchive: src={{ install_dir }}/{{ archive }} dest={{ install_dir }}/ copy=no
     - command: ./install.bin -i silent -f production.properties
-    - file: path={{ config_dir }} state=directory owner=cloudant group=cloudant
                chdir={{ install_dir }}/cloudant-installer
                creates={{ install_dir }}/cloudant/repo
+    - file: path={{ config_dir }} state=directory
     - lineinfile: line="alias r='sudo su - root'" dest=/home/vagrant/.bashrc
