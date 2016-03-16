@@ -4,6 +4,7 @@
   gather_facts: false
   vars:
     append_bin_path: 'PATH=$PATH:{{ bin_dir }}'
+    erl_call: '{{ bin_dir }}/erl_call_cloudant'
   tasks:
     - command: cast system install -db
       args:
@@ -17,4 +18,4 @@
     - lineinfile: dest=/root/.bashrc line={{ append_bin_path }}
     - lineinfile: dest=/root/.bashrc line="alias tl='tail -f /var/log/cloudant/cloudant-svlogd/current'"
     - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
-    - command: '{{ bin_dir }}/erl_call_cloudant -a "config set [\"log\", \"level\", \"notice\"]"'
+    - command: '{{ erl_call }} -a "config set [\"log\", \"level\", \"info\"]"'
