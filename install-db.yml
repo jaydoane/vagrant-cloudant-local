@@ -16,6 +16,7 @@
     - copy: src=files/cluster.sh dest={{ config_dir }}/ mode=0755
     - shell: '{{ config_dir }}/cluster.sh'
     - lineinfile: dest=/root/.bashrc line={{ append_bin_path }}
-    - lineinfile: dest=/root/.bashrc line="alias tl='tail -f /var/log/cloudant/cloudant-svlogd/current'"
+    - lineinfile: line="alias tl='tail -f /var/log/cloudant/cloudant-svlogd/current'"
+                  dest=/root/.bashrc
     - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
     - command: '{{ erl_call }} -a "config set [\"log\", \"level\", \"info\"]"'
