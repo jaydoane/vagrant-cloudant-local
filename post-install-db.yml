@@ -2,16 +2,18 @@
 - hosts: all
   sudo: true
   gather_facts: false
+  vars:
+    - erl_call: '{{ bin_dir }}/erl_call_cloudant'
   tasks:
     # only create databases on last node, once cluster has completely formed
     - command: cast database init --password {{ admin_password }}
 
     # ensure all nodes have same exact encoded admin password
-    - command: '{{ bin_dir }}/erl_call_cloudant -a "config get [\"admins\", \"admin\"]"'
+    - command: '{{ erl_call }} -a "config get [\"admins\", \"admin\"]"'
       register: encoded_admin_pass_cmd
     - set_fact: encoded_admin_pass={{ encoded_admin_pass_cmd.stdout }}
     - debug: var=encoded_admin_pass
-    - command: '{{ bin_dir }}/erl_call_cloudant -a "rpc multicall [config, set, [\"admins\", \"admin\", \"{{ encoded_admin_pass }}\"]]"'
+    - command: '{{ erl_call }} -a "rpc multicall [config, set, [\"admins\", \"admin\", \"{{ encoded_admin_pass }}\"]]"'
 
     # create non-admin secondary user for testy
     - template: src=files/create_testy_user2.sh dest={{ config_dir }}/ mode=0755
