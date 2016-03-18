@@ -1,6 +1,7 @@
 ---
 - hosts: all
-  sudo: true
+  become: yes
+  become_user: root
   gather_facts: false
   tasks:
     - shell: cast system install -lb
