@@ -17,4 +17,4 @@
                chdir={{ install_dir }}/cloudant-installer
                creates={{ install_dir }}/cloudant/repo
     - file: path={{ config_dir }} state=directory
-    - lineinfile: line="alias r='sudo su - root'" dest=~/.bashrc
+    - lineinfile: line="alias r='sudo su - root'" dest=/home/vagrant/.bashrc
