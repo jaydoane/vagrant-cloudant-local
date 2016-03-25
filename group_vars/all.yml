@@ -6,4 +6,5 @@ domain_suffix: ".v" # fqdn necessary for `erl -name` to work
 install_dir: /root
 bin_dir: /opt/cloudant/bin
 config_dir: /opt/cloudant/.config
+cast_config_dir: /opt/cloudant/cast/etc
 admin_password: pass

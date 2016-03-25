@@ -7,8 +7,8 @@
     - shell: cast system install -lb
       args:
         creates: /etc/haproxy # better way?
-    - copy: src=files/gen_lbnode_yaml.py dest={{ config_dir }}/
+    - copy: src=files/gen_lbnode_yaml.py dest={{ cast_config_dir }}/
     - shell: DB_PREFIX={{ db_prefix }} python gen_lbnode_yaml.py < /etc/hosts > lbnode.yaml
       args:
-        chdir: '{{ config_dir }}'
-    - command: cast node config {{ config_dir }}/lbnode.yaml
+        chdir: '{{ cast_config_dir }}'
+    - command: cast node config {{ cast_config_dir }}/lbnode.yaml
