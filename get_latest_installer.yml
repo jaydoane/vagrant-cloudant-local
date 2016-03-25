@@ -5,8 +5,9 @@
   gather_facts: false
   hosts: all
   vars:
+    release_dir: latest
     archive_re: cloudant-[0-9.-]+{{ platform }}-x86_64.tar.gz
-    installers_url: s3://cloudant-local-installer/releases/latest
+    installers_url: s3://cloudant-local-installer/releases/{{ release_dir }}
   tasks:
     - shell: s3cmd ls {{ installers_url }}/ | egrep -o {{ archive_re }}
       register: installer_cmd
