@@ -2,6 +2,7 @@
 platform: trusty
 db_prefix: db
 lb_prefix: lb
+domain_suffix: ".v" # fqdn necessary for `erl -name` to work
 install_dir: /root
 bin_dir: /opt/cloudant/bin
 config_dir: /opt/cloudant/.config

@@ -19,7 +19,6 @@ db_count = 3
 lb_count = 1
 memory_size = 1024
 box = "ubuntu/#{conf['platform']}64"
-domain_suffix = ".v" # fqdn necessary for `erl -name` to work
 
 Vagrant.configure(2) do |config|
 
@@ -45,7 +44,7 @@ Vagrant.configure(2) do |config|
       name = env[:name_prefix] + num.to_s
       config.vm.define name.to_sym do |node|
         node.vm.box = box
-        node.vm.hostname = name + domain_suffix
+        node.vm.hostname = name + conf['domain_suffix']
         # _NOTE_ disconnect Cisco AnyConnect VPN for private host-only routes, see:
         # https://www.reddit.com/r/virtualbox/comments/2rqhae
         # https://forums.virtualbox.org/viewtopic.php?f=8&t=55066
