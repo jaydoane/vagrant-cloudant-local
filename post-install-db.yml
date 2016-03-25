@@ -19,3 +19,6 @@
     # create non-admin secondary user for testy
     - template: src=files/create_testy_user2.sh dest={{ config_dir }}/ mode=0755
     - command: '{{ config_dir }}/create_testy_user2.sh'
+
+    - name: export cluster config for adding extra db nodes
+      command: cast cluster export /vagrant/cluster_dbnode.yaml

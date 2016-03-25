@@ -1,2 +1,3 @@
 .vagrant
 cloudant-*.tar.gz
+files/id_rsa*

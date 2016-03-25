@@ -17,6 +17,7 @@ re_install = false
 
 db_count = 3
 lb_count = 1
+extra_count = 1
 memory_size = 1024
 box = "ubuntu/#{conf['platform']}64"
 
@@ -27,6 +28,11 @@ Vagrant.configure(2) do |config|
   config.hostmanager.manage_guest = true
   config.hostmanager.manage_host = true
 
+  # https://github.com/phinze/vagrant-host-shell
+  config.vm.provision :host_shell do |host_shell|
+    host_shell.inline = "cd files && ./ensure_keypair.sh"
+  end
+
   # db nodes must be first so they show up in lb nodes' /etc/hosts
   envs = [
     {:count => db_count,
@@ -36,7 +42,11 @@ Vagrant.configure(2) do |config|
     {:count => lb_count,
      :name_prefix => conf["lb_prefix"],
      :ip_addr_prefix => "192.168.56.2",
-     :install_file => "install-lb.yml"}
+     :install_file => "install-lb.yml"},
+    {:count => extra_count,
+     :name_prefix => "extra",
+     :ip_addr_prefix => "192.168.56.4",
+     :install_file => "install-extra.yml"}
   ]
 
   envs.each do |env|

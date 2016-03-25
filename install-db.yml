@@ -19,3 +19,4 @@
                   dest=/root/.bashrc
     - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
     - command: '{{ erl_call }} -a "config set [\"log\", \"level\", \"notice\"]"'
+    - copy: src=files/id_rsa.pub dest=/opt/cloudantrebal/.ssh/authorized_keys

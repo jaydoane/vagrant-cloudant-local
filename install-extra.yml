@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  gather_facts: false
+  tasks:
+    - command: cast system install -c /vagrant/cluster_dbnode.yaml -db
+        creates=/opt/cloudant/lib
+    - command: castn offline
+    - name: clean up cluster config file
+      command: rm /vagrant/cluster_dbnode.yaml
+    - file: path={{ rebal_dir }}/.ssh state=directory
+    - copy: src=files/id_rsa.pub dest={{ rebal_dir }}/.ssh/authorized_keys

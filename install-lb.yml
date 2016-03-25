@@ -12,3 +12,15 @@
       args:
         chdir: '{{ cast_config_dir }}'
     - command: cast node config {{ cast_config_dir }}/lbnode.yaml
+    - copy: src={{ item }} dest=/root/.ssh/ mode=0600
+      with_fileglob:
+        - ./files/id_rsa*
+    - file: path=/root/.ssh/config state=touch mode=0644
+    - name: configure ssh client
+      blockinfile:
+        dest: /root/.ssh/config
+        block: |
+          Host *{{ domain_suffix }}
+            StrictHostKeyChecking no
+            User cloudantrebal
+    - template: src=files/rebal.ini dest={{ rebal_dir }}/
