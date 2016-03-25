@@ -16,6 +16,7 @@ VirtualBox installed.
 - `pip install ansible`
 - `pip install s3cmd`
 - `vagrant plugin install vagrant-hostmanager`
+- `vagrant plugin install vagrant-host-shell`
 - create ~/.s3cfg containing `access_key` and `secret_key` for accessing
   `s3://cloudant-local-installer/releases/latest`
 
