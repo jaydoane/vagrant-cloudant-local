@@ -1,6 +1,7 @@
 ---
 - hosts: all
-  sudo: true
+  become: yes
+  become_user: root
   gather_facts: false
   vars:
     - erl_call: '{{ bin_dir }}/erl_call_cloudant'
