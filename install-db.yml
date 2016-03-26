@@ -16,4 +16,5 @@
     - lineinfile: line="alias tl='tail -f /var/log/cloudant/cloudant.log'"
                   dest=/root/.bashrc
     - command: '{{ erl_call }} -a "config set [\"log\", \"level\", \"notice\"]"'
-    - copy: src=files/id_rsa.pub dest=/opt/cloudantrebal/.ssh/authorized_keys
+    - copy: src=files/id_rsa.pub dest={{ rebal_dir }}/.ssh/authorized_keys
+        owner=cloudantrebal group=cloudant
