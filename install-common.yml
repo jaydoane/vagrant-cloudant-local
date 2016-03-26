@@ -9,6 +9,7 @@
     archive_cmd: 'ls -1 cloudant-*-{{platform}}-*.tar.gz | tail -n1'
     archive: '{{ lookup("pipe", archive_cmd) }}'
     repo_dir: '{{ install_dir }}/cloudant/repo'
+    append_bin_path: 'PATH=$PATH:{{ bin_dir }}'
   tasks:
     - debug: var=archive
     - copy: src={{ archive }} dest={{ install_dir }}/
@@ -18,3 +19,5 @@
                creates={{ install_dir }}/cloudant/repo
     - file: path={{ config_dir }} state=directory
     - lineinfile: line="alias r='sudo su - root'" dest=/home/vagrant/.bashrc
+    - lineinfile: dest=/root/.bashrc line={{ append_bin_path }}
+    - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}

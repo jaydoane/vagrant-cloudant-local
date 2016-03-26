@@ -4,7 +4,6 @@
   become_user: root
   gather_facts: false
   vars:
-    append_bin_path: 'PATH=$PATH:{{ bin_dir }}'
     erl_call: '{{ bin_dir }}/erl_call_cloudant'
   tasks:
     - command: cast system install -db creates=/opt/cloudant/lib
@@ -14,9 +13,7 @@
     - shell: '{{ config_dir }}/block_until_db_up.sh'
     - copy: src=files/cluster.sh dest={{ config_dir }}/ mode=0755
     - shell: '{{ config_dir }}/cluster.sh'
-    - lineinfile: dest=/root/.bashrc line={{ append_bin_path }}
     - lineinfile: line="alias tl='tail -f /var/log/cloudant/cloudant.log'"
                   dest=/root/.bashrc
-    - lineinfile: dest=/home/vagrant/.bashrc line={{ append_bin_path }}
     - command: '{{ erl_call }} -a "config set [\"log\", \"level\", \"notice\"]"'
     - copy: src=files/id_rsa.pub dest=/opt/cloudantrebal/.ssh/authorized_keys
