@@ -7,6 +7,7 @@
     - command: cast system install -c /vagrant/cluster_dbnode.yaml -db
         creates=/opt/cloudant/lib
     - command: castn offline
+      ignore_errors: yes
     - name: clean up cluster config file
       file: path=/vagrant/cluster_dbnode.yaml state=absent
     - file: path={{ rebal_dir }}/.ssh state=directory
