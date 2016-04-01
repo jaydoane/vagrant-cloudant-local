@@ -52,7 +52,7 @@ Vagrant.configure(2) do |config|
   envs.each do |env|
     1.upto(env[:count]) do |num|
       name = env[:name_prefix] + num.to_s
-      config.vm.define name.to_sym do |node|
+      config.vm.define name do |node|
         node.vm.box = box
         node.vm.hostname = name + conf['domain_suffix']
         # _NOTE_ disconnect Cisco AnyConnect VPN for private host-only routes, see:
